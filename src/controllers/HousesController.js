@@ -6,6 +6,19 @@ export class HousesController extends BaseController {
         super('api/houses')
         this.router
             .get('', this.getHouses)
+            .get('/search', this.searchHouses)
+            .get('/:houseId', this.getHouseById)
+    }
+
+
+    async searchHouses(request, response, next) {
+        try {
+            const searchQ = request.query
+            const houses = await housesService.searchHouses(searchQ)
+            response.send(houses)
+        } catch (error) {
+            next(error)
+        }
     }
 
 
@@ -17,4 +30,16 @@ export class HousesController extends BaseController {
             next(error)
         }
     }
+
+
+    async getHouseById(request, response, next) {
+        try {
+            const houseId = request.params.houseId
+            const house = await housesService.getHousebyId(houseId)
+            response.send(house)
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
