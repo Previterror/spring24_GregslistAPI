@@ -20,7 +20,7 @@ export class JobsController extends BaseController {
     }
 
 
-    async getJobs(request, response, next) {
+    getJobs(request, response, next) {
         try {
             const jobs = await jobsService.getJobs()
             response.send(jobs)
